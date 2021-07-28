@@ -6,8 +6,8 @@ from datetime import datetime
 import calendar
 import json
 
-apiKey = "6dwMHnRAIwNFxtQiMA"
-apiSecret = "E1D2eoAh9VszKmKONbreN1H963ZYZ7ymAi4A"
+apiKey = ""
+apiSecret = ""
 
 session = HTTP(
     endpoint='https://api.bybit.com', 
