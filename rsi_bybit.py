@@ -5,9 +5,15 @@ import time
 from datetime import datetime
 import calendar
 import json
+import pprint
+import os
 
-apiKey = ""
-apiSecret = ""
+# 여기부터 ~ 
+# print(os.getcwd())
+f = open("bitbot/key/bybit_key.txt", 'r')
+apiKey = f.readline()
+apiSecret = f.readline()
+f.close()
 
 session = HTTP(
     endpoint='https://api.bybit.com', 
@@ -15,7 +21,22 @@ session = HTTP(
     api_secret=apiSecret
 )
 
+def rsi_bybit(itv, symbol='BTCUSD'):
+    now = datetime.utcnow()
+    unixtime = calendar.timegm(now.utctimetuple())
+    since = unixtime-itv*60*200;
+    response=session.query_kline(symbol='BTCUSD',interval=str(itv),**{'from':since})['result']
+    df = pd.DataFrame(response)
+    pprint.pprint(response)
+    pprint.pprint(df)
+    # df=df.reindex(index=df.index[::-1]).reset_index()
+    rsi=rsi_calc(df,14).iloc[-1]
+    print(rsi)
+
 def rsi_calc(ohlc: pd.DataFrame, period: int = 14):
+    print(ohlc)
+    ohlc = ohlc['close'].astype(float)
+    print(ohlc)
     delta = ohlc.diff()
     gains, declines = delta.copy(), delta.copy()
     gains[gains < 0] = 0
@@ -27,21 +48,10 @@ def rsi_calc(ohlc: pd.DataFrame, period: int = 14):
     RS = _gain / _loss
     return pd.Series(100-(100/(1+RS)), name="RSI")
 
-
 # test
 while True:
-    now = datetime.utcnow()
-    unixtime = calendar.timegm(now.utctimetuple())
-    since = unixtime - 60 * 60 *24*200
-    response=session.query_kline(symbol='BTCUSD',interval="15",**{'from':since})['result']
-    
-    df = pd.DataFrame(response)
-    
-    df=df.reindex(index=df.index[::-1]).reset_index()
-
-    rsi=rsi_calc(df,14).iloc[-1]
-
-    #print(rsi)
+    rsi_bybit(15)
+    rsi_bybit(60)    
+    rsi_bybit(240)
 
     time.sleep(1)
-
