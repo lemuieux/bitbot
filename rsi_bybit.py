@@ -27,16 +27,12 @@ def rsi_bybit(itv, symbol='BTCUSD'):
     since = unixtime-itv*60*200;
     response=session.query_kline(symbol='BTCUSD',interval=str(itv),**{'from':since})['result']
     df = pd.DataFrame(response)
-    pprint.pprint(response)
-    pprint.pprint(df)
     # df=df.reindex(index=df.index[::-1]).reset_index()
     rsi=rsi_calc(df,14).iloc[-1]
-    print(rsi)
+    return rsi
 
 def rsi_calc(ohlc: pd.DataFrame, period: int = 14):
-    print(ohlc)
     ohlc = ohlc['close'].astype(float)
-    print(ohlc)
     delta = ohlc.diff()
     gains, declines = delta.copy(), delta.copy()
     gains[gains < 0] = 0
@@ -49,9 +45,9 @@ def rsi_calc(ohlc: pd.DataFrame, period: int = 14):
     return pd.Series(100-(100/(1+RS)), name="RSI")
 
 # test
-while True:
-    rsi_bybit(15)
-    rsi_bybit(60)    
-    rsi_bybit(240)
+# while True:
+#     rsi_bybit(15)
+#     rsi_bybit(60)    
+#     rsi_bybit(240)
 
-    time.sleep(1)
+#     time.sleep(1)

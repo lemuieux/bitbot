@@ -84,8 +84,8 @@ def fear_month():
     
 
 # test
-print(fear_day())
-print(fear_yester())
-print(fear_twodaysago())
-print(fear_week())
-print(fear_month())
+# print(fear_day())
+# print(fear_yester())
+# print(fear_twodaysago())
+# print(fear_week())
+# print(fear_month())
