@@ -8,9 +8,8 @@ import json
 import pprint
 import os
 
-# 여기부터 ~ 
 # print(os.getcwd())
-f = open("bitbot/key/bybit_key.txt", 'r')
+f = open("key/bybit_key.txt", 'r')
 apiKey = f.readline()
 apiSecret = f.readline()
 f.close()
@@ -45,9 +44,7 @@ def rsi_calc(ohlc: pd.DataFrame, period: int = 14):
     return pd.Series(100-(100/(1+RS)), name="RSI")
 
 # test
-# while True:
-#     rsi_bybit(15)
-#     rsi_bybit(60)    
-#     rsi_bybit(240)
-
-#     time.sleep(1)
+print(rsi_bybit(15))
+print(rsi_bybit(60))    
+print(rsi_bybit(240))
+time.sleep(1)

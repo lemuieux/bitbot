@@ -4,6 +4,7 @@ import time
 import webbrowser
 import pyupbit
 import json
+import pprint
 
 
 # 15분 캔들
@@ -29,12 +30,11 @@ url = "https://api.upbit.com/v1/ticker"
 querystring = {"markets":"KRW-AXS"}
 headers = {"Accept": "application/json"}
 response = requests.request("GET", url, headers=headers, params=querystring)
-
+print(response.text)
+pprint.pprint(response.text)
 # 출력
 parsed = json.loads(response.text)
 print(json.dumps(parsed, indent=4))
-
-webbrowser.open("https://naver.com")
 
 # a = 1 
 

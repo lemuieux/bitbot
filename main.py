@@ -4,6 +4,7 @@ import rsi_binance
 import fund_bybit
 import fund_binance
 import fund_bitmex
+import fund_bitget
 import fear_greed
 
 while True:
@@ -23,9 +24,11 @@ while True:
     print("fund_bybit : " + str(fund_bybit.funding_rate_bybit()))
     print("fund_binance : " + str(fund_binance.funding_rate_binance()))
     print("fund_bitmex : " + str(fund_bitmex.funding_rate_bitmex()))
+    print("fund_bitget : " +str(fund_bitget.funding_rate_bitget()))
     print("----------------------------------")
     print("p_fund_bybit : " +str(fund_bybit.predicted_funding_rate_bybit()))
     print("p_fund_bitmex : " +str(fund_bitmex.predicted_funding_rate_bitmex()))
+    print("p_fund_bitget : " +str(fund_bitget.predicted_funding_rate_bitget()))
     print("----------------------------------")
     print("fear_greed(twodaysago) : " + str(fear_greed.fear_twodaysago()))
     print("fear_greed(yesterday) : " + str(fear_greed.fear_yester()))
